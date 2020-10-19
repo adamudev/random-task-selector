@@ -12,12 +12,16 @@ class App extends React.Component {
     };
   }
 
-  handleClearTask = () => {
-    this.setState(() => {
-      return {
-        tasks: [],
-      };
-    });
+  handleClearAllTasks = () => {
+    this.setState(() => ({
+      tasks: [],
+    }));
+  };
+
+  handleRemoveTask = (removeTask) => {
+    this.setState((prevState) => ({
+      tasks: prevState.tasks.filter((task) => removeTask !== task),
+    }));
   };
 
   handlePickTask = () => {
@@ -33,11 +37,9 @@ class App extends React.Component {
       return "The task already exist";
     }
 
-    this.setState((prevState) => {
-      return {
-        tasks: prevState.tasks.concat(task),
-      };
-    });
+    this.setState((prevState) => ({
+      tasks: prevState.tasks.concat(task),
+    }));
   };
 
   render() {
@@ -51,7 +53,8 @@ class App extends React.Component {
         />
         <Tasks
           tasks={this.state.tasks}
-          handleClearTask={this.handleClearTask}
+          handleClearAllTasks={this.handleClearAllTasks}
+          handleRemoveTask={this.handleRemoveTask}
         />
         <AddTask handleAddTask={this.handleAddTask} />
       </div>
