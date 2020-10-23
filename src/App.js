@@ -2,20 +2,17 @@ import React from "react";
 import Header from "./Components/Header/Header.component";
 import Tasks from "./Components/Tasks/Tasks.component";
 import AddTask from "./Components/Tasks/AddTask.component";
+import TaskModal from "./Components/TaskModal/TaskModal";
 import "./App.css";
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tasks: [],
-    };
-  }
+  state = {
+    tasks: [],
+    chosenTask: undefined,
+  };
 
   handleClearAllTasks = () => {
-    this.setState(() => ({
-      tasks: [],
-    }));
+    this.setState(() => ({ tasks: [] }));
   };
 
   handleRemoveTask = (removeTask) => {
@@ -26,8 +23,10 @@ class App extends React.Component {
 
   handlePickTask = () => {
     const randomPick = Math.floor(Math.random() * this.state.tasks.length);
-    const tasks = this.state.tasks[randomPick];
-    alert(tasks);
+    const task = this.state.tasks[randomPick];
+    this.setState(() => ({
+      chosenTask: task,
+    }));
   };
 
   handleAddTask = (task) => {
@@ -41,11 +40,33 @@ class App extends React.Component {
       tasks: prevState.tasks.concat(task),
     }));
   };
+  handleClodeModal = () => {
+    this.setState(() => ({ chosenTask: undefined }));
+  };
+
+  componentDidMount() {
+    try {
+      const json = localStorage.getItem("tasks");
+      const tasks = JSON.parse(json);
+      if (tasks) {
+        this.setState(() => ({ tasks }));
+      }
+    } catch (error) {}
+    console.log("ComponentDidMount");
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.tasks.length !== this.state.tasks.length) {
+      const json = JSON.stringify(this.state.tasks);
+      localStorage.setItem("tasks", json);
+      console.log("saving data");
+    }
+  }
 
   render() {
     const title = "Random Task Selector";
     return (
-      <div>
+      <div className="app">
         <Header
           title={title}
           hasTasks={this.state.tasks.length > 0}
@@ -57,6 +78,10 @@ class App extends React.Component {
           handleRemoveTask={this.handleRemoveTask}
         />
         <AddTask handleAddTask={this.handleAddTask} />
+        <TaskModal
+          chosenTask={this.state.chosenTask}
+          handleClodeModal={this.handleClodeModal}
+        />
       </div>
     );
   }

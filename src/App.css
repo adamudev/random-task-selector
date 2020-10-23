@@ -1,3 +1,80 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app {
+  width: 70%;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  padding: 10px;
+}
+
+.tasks {
+  position: relative;
+  min-height: 300px;
+  margin: 20px 0;
+  border-radius: 5px;
+  box-shadow: 1px 1px 4px #333;
+}
+
+.task {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+  padding: 10px 15px;
+  border-bottom: 1px dashed #ccc;
+}
+
+input {
+  width: 100%;
+  padding: 5px 10px;
+  margin: 5px 0;
+}
+
+button {
+  cursor: pointer;
+  outline: none;
+}
+
+button.main {
+  width: 100%;
+  padding: 5px 10px;
+  background-color: #333;
+  color: #fff;
+  border-radius: 5px;
+}
+
+button.remove {
+  background-color: #f00;
+  color: #fff;
+  padding: 5px;
+  border: none;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+button.clear {
+  width: 100%;
+  background-color: #f00;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
+  border: none;
+}
+
+.no-task {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
 .error {
   color: #f00;
 }

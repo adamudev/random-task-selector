@@ -1,12 +1,9 @@
 import React from "react";
 
 class AddTask extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      error: undefined,
-    };
-  }
+  state = {
+    error: undefined,
+  };
 
   handleAddTask = (e) => {
     e.preventDefault();
@@ -14,6 +11,10 @@ class AddTask extends React.Component {
     const task = e.target.elements.task.value.trim();
     const error = this.props.handleAddTask(task);
     this.setState(() => ({ error }));
+
+    if (!error) {
+      e.target.elements.task.value = "";
+    }
   };
 
   render() {
@@ -21,8 +22,8 @@ class AddTask extends React.Component {
       <div>
         {this.state.error && <p className="error">{this.state.error}</p>}
         <form onSubmit={this.handleAddTask}>
-          <input type="text" name="task" />
-          <button>Add a Task</button>
+          <input type="text" name="task" placeholder="Type new task" />
+          <button className="main"> Add a Task</button>
         </form>
       </div>
     );
